@@ -52,7 +52,7 @@ import { UserRepository } from './infrastructure/database/user.repository';
 
 // Estrategias
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
-
+import {HealthController} from './interfaces/controllers/health.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -60,10 +60,10 @@ import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
+      port: parseInt(process.env.DB_PORT || '5544', 10),
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || '1234',
-      database: process.env.DB_NAME || 'realculture',
+      database: process.env.DB_NAME || 'realculturedb',
       entities: [
         UserEntity,
         Content,
@@ -108,6 +108,7 @@ import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
     PromoImageController,
     GalleryController,
     AudioController,
+    HealthController, // ✅ Añadido el controlador de salud
   ],
 
   providers: [

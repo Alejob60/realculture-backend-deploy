@@ -1,4 +1,3 @@
-
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -37,8 +36,7 @@ export class Content {
 
   @Column({ nullable: true })
   userId?: string; // para relaciones sin instanciar entidad completa
-  
+
   @Column({ default: 'completed' })
   status: string;
-
 }

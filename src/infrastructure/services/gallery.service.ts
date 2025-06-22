@@ -24,10 +24,22 @@ export class GalleryService {
 
   async getUserGallery(userId: string) {
     const [images, videos, audios, music] = await Promise.all([
-      this.imageRepo.find({ where: { user: { userId } }, order: { createdAt: 'DESC' } }),
-      this.videoRepo.find({ where: { user: { userId } }, order: { createdAt: 'DESC' } }),
-      this.audioRepo.find({ where: { user: { userId } }, order: { createdAt: 'DESC' } }),
-      this.musicRepo.find({ where: { user: { userId } }, order: { createdAt: 'DESC' } }),
+      this.imageRepo.find({
+        where: { user: { userId } },
+        order: { createdAt: 'DESC' },
+      }),
+      this.videoRepo.find({
+        where: { user: { userId } },
+        order: { createdAt: 'DESC' },
+      }),
+      this.audioRepo.find({
+        where: { user: { userId } },
+        order: { createdAt: 'DESC' },
+      }),
+      this.musicRepo.find({
+        where: { user: { userId } },
+        order: { createdAt: 'DESC' },
+      }),
     ]);
 
     return {

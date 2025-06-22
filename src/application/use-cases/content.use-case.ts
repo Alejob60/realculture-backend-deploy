@@ -20,7 +20,8 @@ export class ContentUseCase {
 
   async findOne(id: string): Promise<Content> {
     const content = await this.contentRepository.findOne(id);
-    if (!content) throw new NotFoundException(`Content with ID ${id} not found`);
+    if (!content)
+      throw new NotFoundException(`Content with ID ${id} not found`);
     return content;
   }
 
@@ -54,5 +55,4 @@ export class ContentUseCase {
 
     return this.contentRepository.create(content);
   }
-
 }

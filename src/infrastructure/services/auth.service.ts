@@ -33,7 +33,9 @@ export class AuthService {
     }
 
     if (!user.password) {
-      throw new UnauthorizedException('Este usuario debe iniciar sesión con Google');
+      throw new UnauthorizedException(
+        'Este usuario debe iniciar sesión con Google',
+      );
     }
 
     const passwordMatches = await bcrypt.compare(body.password, user.password);
@@ -103,7 +105,9 @@ export class AuthService {
       const googleId = payload?.sub;
 
       if (!email) {
-        throw new UnauthorizedException('Correo no disponible en token de Google');
+        throw new UnauthorizedException(
+          'Correo no disponible en token de Google',
+        );
       }
 
       let user = await this.userRepo.findByEmail(email);

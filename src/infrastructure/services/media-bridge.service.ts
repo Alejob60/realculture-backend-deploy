@@ -7,7 +7,8 @@ import { Request } from 'express';
 @Injectable()
 export class MediaBridgeService {
   private readonly logger = new Logger(MediaBridgeService.name);
-  private readonly generatorUrl = process.env.VIDEO_GEN_URL || 'http://localhost:4000';
+  private readonly generatorUrl =
+    process.env.VIDEO_GEN_URL || 'http://localhost:4000';
   private readonly VIDEO_SERVICE_URL = process.env.VIDEO_SERVICE_URL!;
 
   constructor(private readonly httpService: HttpService) {}
@@ -16,7 +17,11 @@ export class MediaBridgeService {
     return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
   }
 
-  async generatePromoImage(data: { prompt: string; plan: string; textOverlay?: string }): Promise<any> {
+  async generatePromoImage(data: {
+    prompt: string;
+    plan: string;
+    textOverlay?: string;
+  }): Promise<any> {
     try {
       const response = await axios.post(
         `${this.generatorUrl}/media/image`,
@@ -134,7 +139,10 @@ export class MediaBridgeService {
       const response = await axios.get(url, { responseType: 'arraybuffer' });
       return Buffer.from(response.data as ArrayBuffer);
     } catch (error) {
-      this.logger.error(`❌ Error al obtener archivo de audio ${filename}:`, error.message);
+      this.logger.error(
+        `❌ Error al obtener archivo de audio ${filename}:`,
+        error.message,
+      );
       throw error;
     }
   }
@@ -163,8 +171,9 @@ export class MediaBridgeService {
       return data.result ?? data;
     } catch (error) {
       this.logger.error(`❌ Error reenviando a ${url}`, error);
-      throw new Error('Error al reenviar la solicitud al microservicio de video.');
+      throw new Error(
+        'Error al reenviar la solicitud al microservicio de video.',
+      );
     }
   }
-
 }

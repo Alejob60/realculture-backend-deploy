@@ -37,7 +37,10 @@ export class AudioController {
     const userId = req['user']?.userId;
 
     if (!userId) {
-      throw new HttpException('Usuario no autenticado.', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        'Usuario no autenticado.',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     const duration = dto.duration || 20;
@@ -61,7 +64,11 @@ export class AudioController {
 
     await this.userService.decrementCredits(userId, cost);
 
-    const result = await this.mediaBridgeService.forward('audio/generate', req, dto);
+    const result = await this.mediaBridgeService.forward(
+      'audio/generate',
+      req,
+      dto,
+    );
 
     // Validaciones seguras
     const script = result?.script || '';

@@ -37,7 +37,10 @@ export class PromoImageController {
     const userId = (req as any).user?.userId;
 
     if (!token || !userId) {
-      throw new HttpException('Token inválido o usuario no identificado', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        'Token inválido o usuario no identificado',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     const user = await this.userService.findById(userId);
@@ -47,7 +50,10 @@ export class PromoImageController {
     const requiredCredits = PLAN_CREDITS[serviceKey]?.[userPlan] ?? null;
 
     if (requiredCredits === null) {
-      throw new HttpException('Tu plan no permite generar imágenes promocionales', HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        'Tu plan no permite generar imágenes promocionales',
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     if (!user || user.credits < requiredCredits) {
@@ -59,18 +65,20 @@ export class PromoImageController {
 
     // ✅ Descuento y respuesta actualizada
     const updatedUser = await this.userService.decrementCredits(userId, 10);
-   /*  await this.mediaBridge.saveImageToGallery({
+    /*  await this.mediaBridge.saveImageToGallery({
       userId,
       prompt: result?.result?.prompt,
       imageUrl: result?.result?.imageUrl,
     }); */
     if (!updatedUser) {
-      throw new NotFoundException('No se pudo actualizar los créditos del usuario');
+      throw new NotFoundException(
+        'No se pudo actualizar los créditos del usuario',
+      );
     }
 
     return {
       ...(result || {}),
       credits: updatedUser.credits,
     };
-      }
+  }
 }

@@ -56,7 +56,6 @@ export class UserEntity {
   @OneToMany(() => GeneratedAudioEntity, (audio) => audio.user)
   generatedAudios: GeneratedAudioEntity[];
 
-  @OneToMany(() => GeneratedMusicEntity, (music) => music.user)   
+  @OneToMany(() => GeneratedMusicEntity, (music) => music.user)
   generatedMusic: GeneratedMusicEntity[];
-
 }

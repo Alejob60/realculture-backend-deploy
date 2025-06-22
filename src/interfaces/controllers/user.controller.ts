@@ -51,7 +51,7 @@ export class UserController {
   @Patch('admin/set-credits')
   async setCredits(
     @Req() req: RequestWithUser,
-    @Body() body: { credits: number }
+    @Body() body: { credits: number },
   ) {
     const userId = req.user?.id;
     if (!userId) {
@@ -72,7 +72,7 @@ export class UserController {
   @Patch('decrement-credits')
   async decrementCredits(
     @Req() req: RequestWithUser,
-    @Body() body: { amount: number }
+    @Body() body: { amount: number },
   ) {
     const userId = req.user?.id;
     if (!userId) {
@@ -85,7 +85,10 @@ export class UserController {
       );
     }
 
-    const updatedUser = await this.userService.decrementCredits(userId, body.amount);
+    const updatedUser = await this.userService.decrementCredits(
+      userId,
+      body.amount,
+    );
 
     return {
       message: `Se descontaron ${body.amount} créditos correctamente.`,
@@ -116,5 +119,4 @@ export class UserController {
       credits: result.newCredits,
     };
   }
-
 }

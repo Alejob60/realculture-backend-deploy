@@ -15,6 +15,8 @@ export class Product {
   @Column({ nullable: true })
   imageUrl: string;
 
-  @ManyToOne(() => InfluencerEntity, (influencer) => influencer.products, { nullable: true })
+  @ManyToOne(() => InfluencerEntity, (influencer) => influencer.products, {
+    nullable: true,
+  })
   influencer: InfluencerEntity;
 }

@@ -66,7 +66,10 @@ export class GeneratedImageService {
     // 🔐 Generar SAS URL por imagen
     const result = await Promise.all(
       images.map(async (img) => {
-        const signedUrl = await this.azureBlobService.getSignedUrl(img.filename, 24 * 60 * 60); // 24h
+        const signedUrl = await this.azureBlobService.getSignedUrl(
+          img.filename,
+          24 * 60 * 60,
+        ); // 24h
 
         return {
           id: img.id,

@@ -42,16 +42,25 @@ export class MediaController {
     const userId = req.user?.['userId'];
     const token = req.headers.authorization?.replace('Bearer ', '');
     if (!userId || !token) {
-      throw new UnauthorizedException('Usuario no autenticado o token no encontrado');
+      throw new UnauthorizedException(
+        'Usuario no autenticado o token no encontrado',
+      );
     }
     return { userId, token };
   }
 
   @Post(':type')
-  async generate(@Param('type') type: string, @Req() req: Request, @Body() body: any) {
+  async generate(
+    @Param('type') type: string,
+    @Req() req: Request,
+    @Body() body: any,
+  ) {
     const { userId, token } = this.extractUserData(req);
 
-    const typeMap: Record<string, 'image' | 'video' | 'tts' | 'voice' | 'music' | 'ai-agent'> = {
+    const typeMap: Record<
+      string,
+      'image' | 'video' | 'tts' | 'voice' | 'music' | 'ai-agent'
+    > = {
       image: 'image',
       video: 'video',
       voice: 'voice',
@@ -66,7 +75,10 @@ export class MediaController {
 
     await this.useService.execute(userId, usageKey);
 
-    const serviceMap: Record<string, (data: any, token?: string) => Promise<any>> = {
+    const serviceMap: Record<
+      string,
+      (data: any, token?: string) => Promise<any>
+    > = {
       image: this.mediaBridgeService.generatePromoImage,
       video: this.mediaBridgeService.generateVideo,
       voice: this.mediaBridgeService.generateVoice,
@@ -80,7 +92,9 @@ export class MediaController {
     if (type === 'image') {
       const user = await this.userService.findById(userId);
       if (!user || !user.plan) {
-        throw new UnauthorizedException('No se pudo determinar el plan del usuario');
+        throw new UnauthorizedException(
+          'No se pudo determinar el plan del usuario',
+        );
       }
 
       const plan = user.plan;
@@ -94,7 +108,13 @@ export class MediaController {
       const filename = result?.result?.filename;
 
       if (imageUrl && prompt && filename) {
-        await this.imageService.saveImage(userId, prompt, imageUrl, filename, plan);
+        await this.imageService.saveImage(
+          userId,
+          prompt,
+          imageUrl,
+          filename,
+          plan,
+        );
       }
     } else {
       result = await generate.call(this.mediaBridgeService, body, token);
@@ -102,7 +122,9 @@ export class MediaController {
 
     const updatedUser = await this.userService.findById(userId);
     if (!updatedUser) {
-      throw new UnauthorizedException('Usuario no encontrado luego de generar contenido');
+      throw new UnauthorizedException(
+        'Usuario no encontrado luego de generar contenido',
+      );
     }
 
     return {
@@ -132,7 +154,10 @@ export class MediaController {
       res.send(imageResponse.data);
     } catch (error) {
       this.logger.error(`Error al cargar imagen: ${error.message}`);
-      throw new HttpException('No se pudo cargar la imagen remota', HttpStatus.BAD_GATEWAY);
+      throw new HttpException(
+        'No se pudo cargar la imagen remota',
+        HttpStatus.BAD_GATEWAY,
+      );
     }
   }
 
@@ -158,7 +183,9 @@ export class MediaController {
   async getMyImages(@Req() req: Request) {
     const userId = (req.user as any)?.sub;
     if (!userId) {
-      throw new UnauthorizedException('No se pudo obtener el usuario del token');
+      throw new UnauthorizedException(
+        'No se pudo obtener el usuario del token',
+      );
     }
 
     const images = await this.imageService.getImagesByUserId(userId);

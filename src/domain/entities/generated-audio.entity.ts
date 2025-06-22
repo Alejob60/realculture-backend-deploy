@@ -15,7 +15,7 @@ export class GeneratedAudioEntity {
   @Column()
   userId: string;
 
-  @ManyToOne(() => UserEntity, user => user.generatedAudios)
+  @ManyToOne(() => UserEntity, (user) => user.generatedAudios)
   user: UserEntity;
 
   @Column()

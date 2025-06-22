@@ -52,7 +52,7 @@ import { UserRepository } from './infrastructure/database/user.repository';
 
 // Estrategias
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
-import {HealthController} from './interfaces/controllers/health.controller';
+import { HealthController } from './interfaces/controllers/health.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),

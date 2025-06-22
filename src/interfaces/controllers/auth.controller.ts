@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, UseGuards, Req, HttpException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Req,
+  HttpException,
+} from '@nestjs/common';
 import { AuthService } from '../../infrastructure/services/auth.service';
 import { RegisterRequestDto } from '../dto/register-request.dto';
 import { AuthResponseDto } from '../dto/auth-response.dto';
@@ -8,7 +16,10 @@ import { UserService } from 'src/infrastructure/services/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post('register')
   async register(@Body() body: RegisterRequestDto): Promise<AuthResponseDto> {
@@ -26,14 +37,14 @@ export class AuthController {
     return this.authService.loginWithGoogle(body.token);
   }
 
- @Get('me')
- @UseGuards(JwtAuthGuard)
- async getProfile(@Req() req: { user: { userId: string } }) {
-  const user = await this.userService.findById(req.user.userId);
-  if (!user) {
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  async getProfile(@Req() req: { user: { userId: string } }) {
+    const user = await this.userService.findById(req.user.userId);
+    if (!user) {
       throw new HttpException('Usuario no encontrado', 404);
-  }
-  return {
+    }
+    return {
       userId: user.userId,
       email: user.email,
       name: user.name,

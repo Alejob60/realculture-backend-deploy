@@ -23,10 +23,7 @@ export class CreditsController {
   ) {}
 
   @Post('/buy')
-  async buyCredits(
-    @Req() req: Request,
-    @Body() body: { amount: number },
-  ) {
+  async buyCredits(@Req() req: Request, @Body() body: { amount: number }) {
     const user = req.user as UserEntity;
     if (!user || typeof user.credits !== 'number') {
       throw new UnauthorizedException('Usuario no autenticado o mal definido');

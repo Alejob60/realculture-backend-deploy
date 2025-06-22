@@ -23,13 +23,17 @@ export class ContentRepository {
   }
 
   async findByCreator(creatorId: string): Promise<Content[]> {
-    return this.repo.find({ where: { creator: { userId: creatorId } }, relations: ['creator'] });
+    return this.repo.find({
+      where: { creator: { userId: creatorId } },
+      relations: ['creator'],
+    });
   }
 
   async update(id: string, updateData: Partial<Content>): Promise<Content> {
     await this.repo.update(id, updateData);
     const updated = await this.findOne(id);
-    if (!updated) throw new Error(`Content with ID ${id} not found after update.`);
+    if (!updated)
+      throw new Error(`Content with ID ${id} not found after update.`);
     return updated;
   }
 

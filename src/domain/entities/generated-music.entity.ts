@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 
-
 @Entity('generated_music')
 export class GeneratedMusicEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -16,7 +15,7 @@ export class GeneratedMusicEntity {
   @Column()
   userId: string;
 
-  @ManyToOne(() => UserEntity, user => user.generatedMusic)
+  @ManyToOne(() => UserEntity, (user) => user.generatedMusic)
   user: UserEntity;
 
   @Column()

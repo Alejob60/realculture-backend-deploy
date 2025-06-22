@@ -1,7 +1,4 @@
-import {
-  BadRequestException, 
-  NotFoundException 
-} from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../../domain/entities/user.entity';
@@ -18,12 +15,12 @@ const PLAN_CREDITS = {
     CREATOR: 25,
     PRO: 15,
   },
-  'audio': {
+  audio: {
     FREE: 5,
     CREATOR: 5,
     PRO: 0,
   },
-  'subtitles': {
+  subtitles: {
     FREE: 10,
     CREATOR: 10,
     PRO: 5,
@@ -38,13 +35,12 @@ const PLAN_CREDITS = {
     CREATOR: 40,
     PRO: 20,
   },
-  'avatar': {
+  avatar: {
     FREE: null,
     CREATOR: null,
     PRO: 150,
   },
 };
-
 
 export class UserService {
   constructor(
@@ -56,7 +52,7 @@ export class UserService {
     const user = await this.userRepository.findOneBy({ userId: userId });
     return { credits: user?.credits ?? 0 };
   }
-  
+
   async findById(userId: string): Promise<UserEntity | null> {
     return await this.userRepository.findOneBy({ userId: userId });
   }
@@ -91,7 +87,9 @@ export class UserService {
     await this.userRepository.update({ userId: userId }, { credits });
   }
   async decrementCredits(userId: string, amount: number) {
-    const user = await this.userRepository.findOne({ where: { userId: userId } });
+    const user = await this.userRepository.findOne({
+      where: { userId: userId },
+    });
 
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
@@ -113,6 +111,4 @@ export class UserService {
     const user = this.userRepository.create(data);
     return await this.userRepository.save(user);
   }
-
-
 }

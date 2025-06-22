@@ -1,5 +1,11 @@
 // src/domain/entities/generated-video.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
 import { UserEntity } from './user.entity';
 
 @Entity('generated_videos')
@@ -10,7 +16,7 @@ export class GeneratedVideoEntity {
   @Column()
   userId: string;
 
-  @ManyToOne(() => UserEntity, user => user.generatedVideos)
+  @ManyToOne(() => UserEntity, (user) => user.generatedVideos)
   user: UserEntity;
 
   @Column()

@@ -20,7 +20,8 @@ export class ContentService {
 
   async findOne(id: string): Promise<Content> {
     const content = await this.contentRepository.findOne(id);
-    if (!content) throw new NotFoundException(`Content with ID ${id} not found`);
+    if (!content)
+      throw new NotFoundException(`Content with ID ${id} not found`);
     return content;
   }
 
@@ -69,7 +70,9 @@ export class ContentService {
     const user = await this.userRepository.findById(data.userId);
 
     if (!user) {
-      throw new NotFoundException('Usuario no encontrado para guardar contenido');
+      throw new NotFoundException(
+        'Usuario no encontrado para guardar contenido',
+      );
     }
 
     const content: Partial<Content> = {

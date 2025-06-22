@@ -1,4 +1,14 @@
-import { Controller, Post, Get, Param, Body, Req, UseGuards, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Param,
+  Body,
+  Req,
+  UseGuards,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { ContentService } from '../../infrastructure/services/content.service';
 import { Content } from '../../domain/entities/content.entity';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
@@ -11,7 +21,10 @@ export class ContentController {
   constructor(private readonly contentService: ContentService) {}
 
   @Post()
-  async create(@Body() body: Partial<Content>, @Req() req: Request): Promise<Content> {
+  async create(
+    @Body() body: Partial<Content>,
+    @Req() req: Request,
+  ): Promise<Content> {
     const user = req.user as UserEntity;
     return this.contentService.create({ ...body, creator: user });
   }
@@ -27,7 +40,10 @@ export class ContentController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateData: Partial<Content>): Promise<Content> {
+  async update(
+    @Param('id') id: string,
+    @Body() updateData: Partial<Content>,
+  ): Promise<Content> {
     return this.contentService.update(id, updateData);
   }
 

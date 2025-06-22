@@ -50,8 +50,13 @@ Responde como si fueras una celebridad digital que habla a sus seguidores y prom
 
       return response.data.choices[0].message.content.trim();
     } catch (error) {
-      console.error('❌ Error al generar la promoción con Azure OpenAI:', error?.response?.data || error.message);
-      throw new InternalServerErrorException('No se pudo generar la promoción en este momento.');
+      console.error(
+        '❌ Error al generar la promoción con Azure OpenAI:',
+        error?.response?.data || error.message,
+      );
+      throw new InternalServerErrorException(
+        'No se pudo generar la promoción en este momento.',
+      );
     }
   }
 }

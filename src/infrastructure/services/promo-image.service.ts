@@ -36,7 +36,7 @@ export class PromoImageService {
     // Llamada al microservicio de generación de imagen
     const microserviceURL = 'http://localhost:4000/image/promo';
     const response = await firstValueFrom(
-      this.httpService.post(microserviceURL, { prompt })
+      this.httpService.post(microserviceURL, { prompt }),
     );
 
     const data = response.data;

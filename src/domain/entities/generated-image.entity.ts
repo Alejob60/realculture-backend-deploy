@@ -25,7 +25,7 @@ export class GeneratedImageEntity {
   @Column({ default: 'active' }) // ✅ Puede ser: 'active', 'expired'
   status: string;
 
-  @Column({ type: 'timestamp', nullable: true})
+  @Column({ type: 'timestamp', nullable: true })
   expiresAt: Date; // ✅ Fecha de expiración basada en el plan del usuario
 
   @ManyToOne(() => UserEntity, (user) => user.generatedImages)

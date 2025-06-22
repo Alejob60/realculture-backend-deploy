@@ -5,7 +5,18 @@ import { UserService } from '../../infrastructure/services/user.service';
 export class UseServiceUseCase {
   constructor(private readonly userService: UserService) {}
 
-  async execute(userId: string, service: 'image' | 'video' | 'tts' | 'subtitles' | 'ai-agent'| 'voice' | 'music' | 'agent') {
+  async execute(
+    userId: string,
+    service:
+      | 'image'
+      | 'video'
+      | 'tts'
+      | 'subtitles'
+      | 'ai-agent'
+      | 'voice'
+      | 'music'
+      | 'agent',
+  ) {
     const costMap = {
       image: 10,
       video: 25,
@@ -24,7 +35,9 @@ export class UseServiceUseCase {
     const cost = costMap[service];
 
     if (user.role === 'FREE' && service === 'ai-agent') {
-      throw new ForbiddenException('Este servicio solo está disponible en planes de pago.');
+      throw new ForbiddenException(
+        'Este servicio solo está disponible en planes de pago.',
+      );
     }
 
     if (user.credits < cost) {
